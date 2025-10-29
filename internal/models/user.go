@@ -70,8 +70,8 @@ func (u *User) IsAdmin() bool {
 	return u.RootAdmin
 }
 
-func (u *User) AccessibleServers(db *gorm.DB) ([]Server, error) {
-	var servers []Server
-	err := db.Preload("Owner").Where("owner_id = ?", u.ID).Find(&servers).Error
-	return servers, err
-}
+// func (u *User) AccessibleServers(db *gorm.DB) ([]Server, error) {
+// 	var servers []Server
+// 	err := db.Preload("Owner").Where("owner_id = ?", u.ID).Find(&servers).Error
+// 	return servers, err
+// }
