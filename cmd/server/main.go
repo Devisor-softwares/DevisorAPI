@@ -2,7 +2,7 @@ package main
 
 import (
     "devisor/internal/config"
-    // "devisor/internal/db"
+    "devisor/internal/db"
     // "devisor/internal/handlers"
     // "devisor/internal/middleware"
 
@@ -11,7 +11,7 @@ import (
 
 func main() {
     cfg, _ := config.LoadConfig()
-    // database, _ := db.ConnectDB(cfg.DBUrl)
+    database, _ := db.ConnectDB(cfg.DBUrl)
 
     r := gin.Default()
 
