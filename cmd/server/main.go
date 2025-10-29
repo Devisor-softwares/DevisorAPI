@@ -5,24 +5,47 @@ import (
     // "devisor/internal/db"
     // "devisor/internal/handlers"
     // "devisor/internal/middleware"
+    "devisor/internal/handlers"
 
     "github.com/gin-gonic/gin"
 )
 
 func main() {
-    cfg, _ := config.LoadConfig()
-    // database, _ := db.ConnectDB(cfg.DBUrl)
-
     r := gin.Default()
 
-    // r.POST("/register", handlers.Register(database))
-    // r.POST("/login", handlers.Login(database, cfg.JWTSecret))
+    routesCfg, err := config.LoadRoutes("routes.yml")
+    if err != nil {
+        panic(err)
+    }
 
-    // auth := r.Group("/api", middleware.AuthMiddleware(cfg.JWTSecret))
-    // {
-    //     auth.GET("/servers", handlers.ListServers(database))
-    //     auth.POST("/servers", handlers.CreateServer(database))
-    // }
+    for _, route := range routesCfg.Routes {
+        h, ok := handlers.HandlerMap[route.Handler]
+        if !ok {
+            panic("handler not found: " + route.Handler)
+        }
 
-    r.Run(":" + cfg.AppPort)
+        switch route.Method {
+        case "GET":
+            if route.Auth {
+                r.GET(route.Path, AuthMiddleware(), h)
+            } else {
+                r.GET(route.Path, h)
+            }
+        case "POST":
+            if route.Auth {
+                r.POST(route.Path, AuthMiddleware(), h)
+            } else {
+                r.POST(route.Path, h)
+            }
+        }
+    }
+
+    r.Run(":8080")
+}
+
+func AuthMiddleware() gin.HandlerFunc {
+    return func(c *gin.Context) {
+        // TODO: check auth here
+        c.Next()
+    }
 }

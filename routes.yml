@@ -1,0 +1,4 @@
+routes:
+  - method: GET
+    path: /server
+    handler: ServerHandler
