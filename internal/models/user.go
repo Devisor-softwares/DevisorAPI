@@ -27,9 +27,9 @@ type User struct {
 	// TODO: Create those relations, they can only be created
 	// when we create the proper files, for example the Server 
 	// model.
-	Servers   []Server   `gorm:"foreignKey:OwnerID"`
-	SSHKeys   []UserSSHKey `gorm:"foreignKey:UserID"`
-	APIKeys   []APIKey     `gorm:"foreignKey:UserID"`
+	// Servers   []Server   `gorm:"foreignKey:OwnerID"`
+	// SSHKeys   []UserSSHKey `gorm:"foreignKey:UserID"`
+	// APIKeys   []APIKey     `gorm:"foreignKey:UserID"`
 }
 
 // The HelperFunctions do the following:
