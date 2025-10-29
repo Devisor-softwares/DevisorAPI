@@ -17,7 +17,9 @@ func ConnectDB(dsn string) (*gorm.DB, error) {
     // the user model from the modules module.
     // We do the same for server, which are both
     // not implemented yet.
-    db.AutoMigrate(&models.User{}, &models.Server{})
+    db.AutoMigrate(&models.User{})
+
+    // , &models.Server{}
 
     return db, nil
 }
